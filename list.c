@@ -117,6 +117,11 @@ int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
 
 int listDetele(listNode *list, const void *key, listCmp *cmp)
 {
+    if (NULL == list)
+    {
+        return -1;
+    }
+
     listNode *node;
     node = findNode(list, key, cmp);
     if (NULL != node)
@@ -136,17 +141,32 @@ int listSort(listNode *list)
     return 0;
 }
 
-int listChange(listNode *list, void *key, void *newdata)
+int listChange(listNode *list, const void *key, listCmp *cmp,
+               listMod *mod, const void *newData)
 {
-    return 0;
+    if (NULL == list)
+    {
+        return -1;
+    }
+
+    listNode *node;
+    node = findNode(list, key, cmp);
+    if (NULL != node)
+    {
+        if (mod(node->data, newData) == 0)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 int listTravel(listNode *list, listOper *oper)
 {
     if (NULL == list)
     {
-        printf("empty list\n");
-        return 0;
+        return -1;
     }
 
     listNode *ptr = list->prev;

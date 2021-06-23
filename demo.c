@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "list.h"
 
@@ -31,6 +32,17 @@ static int id_compare(const void *key, const void *data)
     return (*id == listData->id);
 }
 
+static int data_modify(void *oldData, const void *newData)
+{
+    struct data *listOldData = oldData;
+    const struct data *listNewData = newData;
+
+    strncpy(listOldData->name, listNewData->name, NAMESIZE);
+    listOldData->score = listNewData->score;
+
+    return 0;
+}
+
 int main()
 {
     int i = 1;
@@ -57,6 +69,12 @@ int main()
     }
 
     listDetele(list, &key, id_compare);
+    printf("\n");
+    listTravel(list, print);
+
+    key = 4;
+    struct data newData = {0, "test", 100};
+    listChange(list, &key, id_compare, data_modify, &newData);
     printf("\n");
     listTravel(list, print);
 

@@ -15,6 +15,8 @@ typedef int listOper(const void *);
 
 typedef int listCmp(const void *, const void *);
 
+typedef int listMod(void *, const void *);
+
 // 创建链表
 int listInsert(listNode **, const void *, int, int);
 
@@ -25,7 +27,7 @@ int listSearch(listNode *, const void *, listCmp *, listNode **);
 int listDetele(listNode *, const void *, listCmp *);
 
 // 修改链表中的节点
-int listChange(listNode *, void *, void *);
+int listChange(listNode *, const void *, listCmp *, listMod *, const void *);
 
 // 链表排序
 int listSort(listNode *);
