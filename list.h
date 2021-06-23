@@ -11,13 +11,15 @@ typedef struct ListNode
 #define INSERTHEAD 1 // 头部插入
 #define INSERTTAIL 2 // 尾部插入
 
-typedef void listOper(const void *);
+typedef int listOper(const void *);
+
+typedef int listCmp(const void *, const void *);
 
 int listInsert(listNode **, const void *, int, int);
 
 int listDetele(listNode *, void *);
 
-int listSearch(listNode *, void *);
+int listSearch(listNode *, const void *, listCmp *, listNode **);
 
 int listChange(listNode *, void *, void *);
 

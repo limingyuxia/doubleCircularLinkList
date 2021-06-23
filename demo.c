@@ -12,11 +12,23 @@ struct data
     int score;
 };
 
-void print(const void *data)
+// 函数只在内部使用
+static int print(const void *data)
 {
-    struct data listData = *((struct data *)data);
+    const struct data *listData = data;
     printf("id: %d\tname: %s\tscore: %d\n",
-           listData.id, listData.name, listData.score);
+           listData->id, listData->name, listData->score);
+
+    return 0;
+}
+
+static int id_compare(const void *key, const void *data)
+{
+    const int *id = key;
+    const struct data *listData = data;
+
+    // 相同为1，不同为0
+    return (*id == listData->id);
 }
 
 int main()
@@ -34,6 +46,14 @@ int main()
     }
 
     listTravel(list, print);
+
+    int key = 4;        // 要查找的节点索引
+    listNode *findNode; // 查找的节点
+    if (listSearch(list, &key, id_compare, &findNode) == 0)
+    {
+        const struct data *nodeData = findNode->data;
+        print(nodeData);
+    }
 
     listDestory(list);
 

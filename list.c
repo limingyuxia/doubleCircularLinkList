@@ -87,10 +87,37 @@ int listDetele(listNode *list, void *data)
     return 0;
 }
 
-int listSearch(listNode *list, void *data)
+static void *findNode(listNode *list, const void *key, listCmp *cmp)
 {
+    listNode *ptr = list->prev;
 
-    return 0;
+    do
+    {
+        ptr = ptr->next;
+        if (cmp(key, ptr->data) != 0)
+        {
+            return ptr;
+        }
+    } while (ptr->next != list);
+
+    return NULL;
+}
+
+int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
+{
+    if (NULL == list)
+    {
+        return -1;
+    }
+
+    listNode *node;
+    node = findNode(list, key, cmp);
+    {
+        *data = node;
+        return 0;
+    }
+
+    return -2;
 }
 
 int listSort(listNode *list)
