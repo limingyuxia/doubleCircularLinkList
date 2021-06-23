@@ -81,12 +81,6 @@ int listInsert(listNode **list, const void *data, int size, int mode)
     return 0;
 }
 
-int listDetele(listNode *list, void *data)
-{
-
-    return 0;
-}
-
 static void *findNode(listNode *list, const void *key, listCmp *cmp)
 {
     listNode *ptr = list->prev;
@@ -112,6 +106,7 @@ int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
 
     listNode *node;
     node = findNode(list, key, cmp);
+    if (node != NULL)
     {
         *data = node;
         return 0;
@@ -120,13 +115,28 @@ int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
     return -2;
 }
 
+int listDetele(listNode *list, const void *key, listCmp *cmp)
+{
+    listNode *node;
+    node = findNode(list, key, cmp);
+    if (NULL != node)
+    {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+        free(node);
+        free(node->data);
+    }
+
+    return 0;
+}
+
 int listSort(listNode *list)
 {
 
     return 0;
 }
 
-int listChange(listNode *list, void *Odata, void *Ndata)
+int listChange(listNode *list, void *key, void *newdata)
 {
     return 0;
 }

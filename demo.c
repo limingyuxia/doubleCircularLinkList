@@ -47,13 +47,18 @@ int main()
 
     listTravel(list, print);
 
-    int key = 4;        // 要查找的节点索引
+    int key = 3;        // 要查找的节点索引
     listNode *findNode; // 查找的节点
     if (listSearch(list, &key, id_compare, &findNode) == 0)
     {
         const struct data *nodeData = findNode->data;
+        printf("\n");
         print(nodeData);
     }
+
+    listDetele(list, &key, id_compare);
+    printf("\n");
+    listTravel(list, print);
 
     listDestory(list);
 
