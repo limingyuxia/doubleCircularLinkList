@@ -13,7 +13,7 @@ struct data
     int score;
 };
 
-// 函数只在内部使用
+// 打印节点中的数据
 static int print(const void *data)
 {
     const struct data *listData = data;
@@ -23,6 +23,7 @@ static int print(const void *data)
     return 0;
 }
 
+// 根据id查找节点
 static int idCompare(const void *key, const void *data)
 {
     const int *id = key;
@@ -32,6 +33,7 @@ static int idCompare(const void *key, const void *data)
     return (*id == listData->id);
 }
 
+// 修改节点中的数据
 static int dataModify(void *oldData, const void *newData)
 {
     struct data *listOldData = oldData;
@@ -43,6 +45,7 @@ static int dataModify(void *oldData, const void *newData)
     return 0;
 }
 
+// 按节点数据域中的score字段，降序排列链表
 static int scoreSort(const void *data1, const void *data2)
 {
     const struct data *listData1 = data1;
@@ -62,6 +65,7 @@ int main()
     listNode *list = NULL;
     struct data data;
 
+    // 初始化链表
     for (; i < 10; i++)
     {
         data.id = i;
@@ -81,20 +85,24 @@ int main()
         print(nodeData);
     }
 
+    // 删除id为3的节点
     listDetele(list, &key, idCompare);
     printf("\n");
     listTravel(list, print);
 
+    // 修改节点为4节点的数据
     key = 4;
     struct data newData = {0, "test", 100};
     listChange(list, &key, idCompare, dataModify, &newData);
     printf("\n");
     listTravel(list, print);
 
+    // 按成绩降序排列链表
     listSort(list, scoreSort);
     printf("\n");
     listTravel(list, print);
 
+    // 销毁链表，释放内存
     listDestory(list);
 
     return 0;

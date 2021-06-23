@@ -4,6 +4,7 @@
 
 #include "list.h"
 
+// 创建链表
 int listInsert(listNode **list, const void *data, int size, int mode)
 {
     if (NULL == data)
@@ -29,8 +30,10 @@ int listInsert(listNode **list, const void *data, int size, int mode)
             return -2;
         }
 
+        // 第一个节点的前驱和后继都指向自己
         firstNode->prev = firstNode;
         firstNode->next = firstNode;
+        // 拷贝节点的数据域
         if (NULL == memcpy(firstNode->data, data, size))
         {
             perror("memcpy: ");
@@ -55,12 +58,12 @@ int listInsert(listNode **list, const void *data, int size, int mode)
             return -2;
         }
 
-        if (mode == INSERTHEAD)
+        if (mode == INSERTHEAD) // 第一个节点之后插入节点
         {
             newNode->prev = (*list);
             newNode->next = (*list)->next;
         }
-        else if (mode == INSERTTAIL)
+        else if (mode == INSERTTAIL) // 第一个节点之前插入节点
         {
             newNode->next = (*list);
             newNode->prev = (*list)->prev;
@@ -81,6 +84,7 @@ int listInsert(listNode **list, const void *data, int size, int mode)
     return 0;
 }
 
+// 查找链表的数据域中是否存在key
 static void *findNode(listNode *list, const void *key, listCmp *cmp)
 {
     listNode *ptr = list->prev;
@@ -97,6 +101,7 @@ static void *findNode(listNode *list, const void *key, listCmp *cmp)
     return NULL;
 }
 
+// 查找链表中的节点
 int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
 {
     if (NULL == list)
@@ -115,6 +120,7 @@ int listSearch(listNode *list, const void *key, listCmp *cmp, listNode **data)
     return -2;
 }
 
+// 删除链表中的节点
 int listDetele(listNode *list, const void *key, listCmp *cmp)
 {
     if (NULL == list)
@@ -135,6 +141,7 @@ int listDetele(listNode *list, const void *key, listCmp *cmp)
     return 0;
 }
 
+// 链表排序
 int listSort(listNode *list, listOrd *ord)
 {
     if (NULL == list)
@@ -165,6 +172,7 @@ int listSort(listNode *list, listOrd *ord)
     return 0;
 }
 
+// 修改链表中的节点
 int listChange(listNode *list, const void *key, listCmp *cmp,
                listMod *mod, const void *newData)
 {
@@ -186,6 +194,7 @@ int listChange(listNode *list, const void *key, listCmp *cmp,
     return -1;
 }
 
+// 遍历链表
 int listTravel(listNode *list, listOper *oper)
 {
     if (NULL == list)
@@ -205,6 +214,7 @@ int listTravel(listNode *list, listOper *oper)
     return 0;
 }
 
+// 销毁链表
 int listDestory(listNode *list)
 {
     listNode *ptr, *cur;
