@@ -135,8 +135,32 @@ int listDetele(listNode *list, const void *key, listCmp *cmp)
     return 0;
 }
 
-int listSort(listNode *list)
+int listSort(listNode *list, listOrd *ord)
 {
+    if (NULL == list)
+    {
+        return -1;
+    }
+
+    listNode *ptr1 = list->prev;
+    listNode *ptr2 = list;
+    listNode *swap;
+
+    // 时间复杂度很高的冒泡排序
+    do
+    {
+        ptr1 = ptr1->next;
+        do
+        {
+            ptr2 = ptr2->next;
+            if (ord(ptr1->data, ptr2->data) == 0)
+            {
+                swap->data = ptr1->data;
+                ptr1->data = ptr2->data;
+                ptr2->data = swap->data;
+            }
+        } while (ptr2->next != list);
+    } while (ptr1->next != list);
 
     return 0;
 }

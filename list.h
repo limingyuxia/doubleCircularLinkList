@@ -17,6 +17,8 @@ typedef int listCmp(const void *, const void *);
 
 typedef int listMod(void *, const void *);
 
+typedef int listOrd(const void *, const void *);
+
 // 创建链表
 int listInsert(listNode **, const void *, int, int);
 
@@ -30,7 +32,7 @@ int listDetele(listNode *, const void *, listCmp *);
 int listChange(listNode *, const void *, listCmp *, listMod *, const void *);
 
 // 链表排序
-int listSort(listNode *);
+int listSort(listNode *, listOrd *);
 
 // 遍历链表
 int listTravel(listNode *, listOper *); // 指向函数入口地址的指针

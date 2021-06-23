@@ -23,7 +23,7 @@ static int print(const void *data)
     return 0;
 }
 
-static int id_compare(const void *key, const void *data)
+static int idCompare(const void *key, const void *data)
 {
     const int *id = key;
     const struct data *listData = data;
@@ -32,7 +32,7 @@ static int id_compare(const void *key, const void *data)
     return (*id == listData->id);
 }
 
-static int data_modify(void *oldData, const void *newData)
+static int dataModify(void *oldData, const void *newData)
 {
     struct data *listOldData = oldData;
     const struct data *listNewData = newData;
@@ -43,13 +43,26 @@ static int data_modify(void *oldData, const void *newData)
     return 0;
 }
 
+static int scoreSort(const void *data1, const void *data2)
+{
+    const struct data *listData1 = data1;
+    const struct data *listData2 = data2;
+
+    if (listData1->score > listData2->score)
+    {
+        return 0;
+    }
+
+    return 1;
+}
+
 int main()
 {
     int i = 1;
     listNode *list = NULL;
     struct data data;
 
-    for (; i < 6; i++)
+    for (; i < 10; i++)
     {
         data.id = i;
         snprintf(data.name, NAMESIZE, "stu%d", i);
@@ -61,20 +74,24 @@ int main()
 
     int key = 3;        // 要查找的节点索引
     listNode *findNode; // 查找的节点
-    if (listSearch(list, &key, id_compare, &findNode) == 0)
+    if (listSearch(list, &key, idCompare, &findNode) == 0)
     {
         const struct data *nodeData = findNode->data;
         printf("\n");
         print(nodeData);
     }
 
-    listDetele(list, &key, id_compare);
+    listDetele(list, &key, idCompare);
     printf("\n");
     listTravel(list, print);
 
     key = 4;
     struct data newData = {0, "test", 100};
-    listChange(list, &key, id_compare, data_modify, &newData);
+    listChange(list, &key, idCompare, dataModify, &newData);
+    printf("\n");
+    listTravel(list, print);
+
+    listSort(list, scoreSort);
     printf("\n");
     listTravel(list, print);
 
